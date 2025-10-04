@@ -4,19 +4,19 @@ public class FunctionPoint {
     private double x;
     private double y;
 
-    // Creating an object with given coordinates
+    // Создание объекта по заданным точкам
     FunctionPoint(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    // Creating an object with coordinates from another object
+    // Создание копии объекта
     FunctionPoint(FunctionPoint point) {
         this.x = point.getX();
         this.y = point.getY();
     }
 
-    // Empty constructor
+    // Конструктор с параметрами заданными по умолчанию
     FunctionPoint() {
         this.x = 0;
         this.y = 0;
