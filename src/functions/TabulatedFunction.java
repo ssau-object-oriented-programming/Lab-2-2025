@@ -33,6 +33,11 @@ public class TabulatedFunction {
     public double getFunctionValue(double x){
         double LX ,RX; //LX-leftX, RX-rightX
         double LY ,RY; //LY-leftY, RY-rightY
+        for (int i = 0; i<pointsCount;i++){
+            if(x==points[i].getX()){
+                return points[i].getY();
+            }
+        }
         for (int i = 1; i<pointsCount-1;i++){
             LX= points[i-1].getX();
             RX= points[i+1].getX(); //LX-leftX, RX-rightX
