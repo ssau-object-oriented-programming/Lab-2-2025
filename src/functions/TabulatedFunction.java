@@ -31,12 +31,18 @@ public class TabulatedFunction {
         return points[pointsCount-1].getX();
     }
     public double getFunctionValue(double x){
-        double LX= points[0].getX(),RX= points[pointsCount-1].getX(); //LX-leftX, RX-rightX
-        double LY=points[0].getY(),RY= points[pointsCount-1].getY(); //LY-leftY, RY-rightY
-        if(LX>x || RX<x){
-            return Double.NaN;
+        double LX ,RX; //LX-leftX, RX-rightX
+        double LY ,RY; //LY-leftY, RY-rightY
+        for (int i = 1; i<pointsCount-1;i++){
+            LX= points[i-1].getX();
+            RX= points[i+1].getX(); //LX-leftX, RX-rightX
+            LY=points[i-1].getY();
+            RY= points[i+1].getY(); //LY-leftY, RY-rightY
+        if(LX<x && RX>x){
+            return ((x-LX)*(RY-LY))/(RX-LX)+LY;
         }
-        return ((x-LX)*(RY-LY))/(RX-LX)+LY;
+        }
+        return Double.NaN;
     }
 
     public int getPointsCount(){
@@ -44,13 +50,13 @@ public class TabulatedFunction {
     }
 
     public FunctionPoint getPoint(int index){
-        FunctionPoint point = points[index];
+        FunctionPoint point = new FunctionPoint(points[index].getX(),points[index].getY());
         return point;
     }
 
     public void setPoint(int index, FunctionPoint point){
         if (points[index-1].getX()<point.getX()&&points[index + 1].getX()>point.getX()){
-            points[index]=point;
+            points[index]= new FunctionPoint(point.getX(),point.getY());
         }
     }
 

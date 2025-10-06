@@ -4,7 +4,7 @@ class lab_2{
     static public void main(String[] args){
         TabulatedFunction f1 = new TabulatedFunction(0,10,15);
         double[] y_value = new double[15];
-        System.out.println("Функция 1/x");
+        System.out.println("Функция root(x)");
         System.out.println("Область определения: [" + f1.getLeftDomainBorder() + "; " + f1.getRightDomainBorder() + "]");
         System.out.println("Количество точек: " + f1.getPointsCount());
 
