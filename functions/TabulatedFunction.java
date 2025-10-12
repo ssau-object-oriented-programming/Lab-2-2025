@@ -3,31 +3,6 @@ package functions;
 public class TabulatedFunction {
     private FunctionPoint[] points;
     private int pointsCount;
-    public double getLeftDomainBorder() {
-        return points[0].getX();
-    }
-
-    public double getRightDomainBorder() {
-        return points[pointsCount - 1].getX();
-    }
-
-    public double getFunctionValue(double x) {
-        if (x < getLeftDomainBorder() || x > getRightDomainBorder()) {
-            return Double.NaN;//Если x не в диапазоне ,то возвращаем Nan
-        }
-        for (int i = 0; i < pointsCount - 1; i++) {//Берем каждый минимальный отрезок между обьектами,берем их X
-            double x1 = points[i].getX();
-            double x2 = points[i + 1].getX();
-
-            if (x >= x1 && x <= x2) {//Если исходный x между ними ,то находим для него y по формуле 
-                double y1 = points[i].getY();
-                double y2 = points[i + 1].getY();
-
-                return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
-            }
-        }
-        return Double.NaN;
-    }
     public TabulatedFunction(double leftX, double rightX, int pointsCount) {
         if (leftX >= rightX) {
             double temp = leftX;
@@ -64,6 +39,32 @@ public class TabulatedFunction {
             points[i] = new FunctionPoint(x, values[i]);
         }
     }
+    public double getLeftDomainBorder() {
+        return points[0].getX();
+    }
+
+    public double getRightDomainBorder() {
+        return points[pointsCount - 1].getX();
+    }
+
+    public double getFunctionValue(double x) {
+        if (x < getLeftDomainBorder() || x > getRightDomainBorder()) {
+            return Double.NaN;//Если x не в диапазоне ,то возвращаем Nan
+        }
+        for (int i = 0; i < pointsCount - 1; i++) {//Берем каждый минимальный отрезок между обьектами,берем их X
+            double x1 = points[i].getX();
+            double x2 = points[i + 1].getX();
+
+            if (x >= x1 && x <= x2) {//Если исходный x между ними ,то находим для него y по формуле
+                double y1 = points[i].getY();
+                double y2 = points[i + 1].getY();
+
+                return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
+            }
+        }
+        return Double.NaN;
+    }
+
     public int getPointsCount(){
         return pointsCount;
     }
