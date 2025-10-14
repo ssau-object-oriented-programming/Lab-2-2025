@@ -3,6 +3,7 @@ package functions;
 public class TabulatedFunction {
     private FunctionPoint[] points;
     private int pointsCount;
+
     public TabulatedFunction(double leftX, double rightX, int pointsCount) {
         if (leftX >= rightX) {
             double temp = leftX;
@@ -39,6 +40,7 @@ public class TabulatedFunction {
             points[i] = new FunctionPoint(x, values[i]);
         }
     }
+    
     public double getLeftDomainBorder() {
         return points[0].getX();
     }
@@ -68,9 +70,11 @@ public class TabulatedFunction {
     public int getPointsCount(){
         return pointsCount;
     }
+    
     public FunctionPoint getPoint(int index) {
         return new FunctionPoint(points[index]);
     }
+    
     public void setPoint(int index, FunctionPoint point) {
         if (index > 0 && point.getX() <= points[index - 1].getX()) {
             return;
@@ -81,9 +85,11 @@ public class TabulatedFunction {
 
         points[index] = new FunctionPoint(point);
     }
+    
     public double getPointX(int index) {
         return points[index].getX();
     }
+    
     public void setPointX(int index, double x) {
         if (index > 0 && x <= points[index - 1].getX()) {
             return;
@@ -94,18 +100,23 @@ public class TabulatedFunction {
 
         points[index].setX(x);
     }
+    
     public double getPointY(int index) {
         return points[index].getY();
     }
+    
     public void setPointY(int index, double y) {
         points[index].setY(y);
     }
+    
     public void deletePoint(int index) {
         for (int i = index; i < pointsCount - 1; i++) {
             points[i] = points[i + 1];
         }
         --pointsCount;
     }
+    
+    // ИСПРАВЛЕНО: functionPoint -> FunctionPoint (была опечатка)
     public void addPoint(FunctionPoint point){
         int count=0;
         while(count < pointsCount && point.getX()>points[count].getX()){//проверка текущего X обьекта с X обьекта point
@@ -132,7 +143,4 @@ public class TabulatedFunction {
         //  увеличиваем счетчик
         pointsCount++;
     }
-
-
 }
-
