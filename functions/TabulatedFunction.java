@@ -37,7 +37,7 @@ public class TabulatedFunction{
 
     public double getRightDomainBorder(){ return points[pointsCount-1].getX(); }
 
-    public double getFunctionValue(double x) { /////
+    public double getFunctionValue(double x) { 
         if (x < getLeftDomainBorder() || x > getRightDomainBorder()) {
             return Double.NaN;
         }
@@ -47,7 +47,6 @@ public class TabulatedFunction{
                 return points[i].getY();
             }
         }
-
 
         for (int i = 0; i < pointsCount - 1; i++) {
             double x1 = points[i].getX();
@@ -65,8 +64,6 @@ public class TabulatedFunction{
         return Double.NaN;
     }
 
-
-
     public int getPointsCount(){ return pointsCount;}
 
     public FunctionPoint getPoints(int index) {
@@ -81,10 +78,10 @@ public class TabulatedFunction{
         }
 
         if (index > 0 && point.getX() <= points[index - 1].getX()) {
-            return; // X должен быть больше предыдущей точки
+            return; 
         }
         if (index < pointsCount - 1 && point.getX() >= points[index + 1].getX()) {
-            return; // X должен быть меньше следующей точки
+            return; 
         }
 
         points[index] = new FunctionPoint(point);
@@ -102,10 +99,10 @@ public class TabulatedFunction{
         }
 
         if (index > 0 && x <= points[index - 1].getX()) {
-            return; // X должен быть больше предыдущей точки
+            return; 
         }
         if (index < pointsCount - 1 && x >= points[index + 1].getX()) {
-            return; // X должен быть меньше следующей точки
+            return; 
         }
 
         points[index].setX(x);
