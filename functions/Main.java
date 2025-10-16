@@ -12,7 +12,7 @@ public class Main {
         System.out.println("Точек: " + func.getPointsCount());
 
         System.out.println("Тестирование вычислений:");
-        double[] testPoints = {-1, 0, 1, 2, 3, 4, 5};
+        double[] testPoints = {-1, 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5};
         for (double x : testPoints) {
             double y = func.getFunctionValue(x);
             System.out.println("f(" + x + ") = " + y);
