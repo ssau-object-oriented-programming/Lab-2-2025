@@ -7,7 +7,7 @@ public class Main {
         TabulatedFunction f = new TabulatedFunction(-3,3,x2);
         for(int i = 0; i<f.getPointsCount(); i++)
         {
-            System.out.println("X= "+f.getPointX(i)+"  Y= "+f.getPointY(i));
+            System.out.printzln("X= "+f.getPointX(i)+"  Y= "+f.getPointY(i));
         }
 
         System.out.println(f.getLeftDomainBorder() +" "+ f.getRightDomainBorder());
