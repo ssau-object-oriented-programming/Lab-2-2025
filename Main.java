@@ -47,6 +47,13 @@ public class Main {
 		tabFunct.addPoint(point);
 
 		functionValues(tabFunct);
+
+		// Вернем значение функции в точке x
+		System.out.println("Вернем значение функции в точке x");
+		System.out.println(tabFunct.getFunctionValue(-2.5));
+		System.out.println(tabFunct.getFunctionValue(2.5));
+		System.out.println(tabFunct.getFunctionValue(5.0));
+		System.out.println(tabFunct.getFunctionValue(7.0));
 	}
 
 	private static void functionValues(TabulatedFunction _tabFunct) {
@@ -57,6 +64,7 @@ public class Main {
 	}
 
 }
+
 
 
 
