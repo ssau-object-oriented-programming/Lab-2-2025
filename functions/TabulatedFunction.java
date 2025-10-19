@@ -4,6 +4,7 @@ class TabulatedFunction
 {
     private FunctionPoint[] points;
 
+    // констурктор для границ координат и количества точек
     public TabulatedFunction(double leftX, double rightX, int pointsCount)
     {
         if (pointsCount < 2)
@@ -147,6 +148,63 @@ class TabulatedFunction
         points[index] = new FunctionPoint(point);
     }
 
+    public double getPointX(int index)
+    {
+        if(index < 0)
+        {
+            throw new IndexOutOfBoundsException("Index cannot be negative");
+        }
 
+        if(index >= this.points.length)
+        {
+            throw new IndexOutOfBoundsException("Index exceed maximum index");
+        }
 
+        return this.points[index].getX();
+    }
+
+    public double getPointY(int index)
+    {
+        if(index < 0)
+        {
+            throw new IndexOutOfBoundsException("Index cannot be negative");
+        }
+
+        if(index >= this.points.length)
+        {
+            throw new IndexOutOfBoundsException("Index exceed maximum index");
+        }
+
+        return this.points[index].getX();
+    }
+
+    public void setPointX(int index, double x)
+    {
+        if(index < 0)
+        {
+            throw new IndexOutOfBoundsException("Index cannot be negative");
+        }
+
+        if(index >= this.points.length)
+        {
+            throw new IndexOutOfBoundsException("Index exceed maximum index");
+        }
+
+        this.setPoint(index, new FunctionPoint(x, this.points[index].getY()));
+    }
+
+    public void setPointY(int index, double y)
+    {
+        if(index < 0)
+        {
+            throw new IndexOutOfBoundsException("Index cannot be negative");
+        }
+
+        if(index >= this.points.length)
+        {
+            throw new IndexOutOfBoundsException("Index exceed maximum index");
+        }
+
+        this.setPoint(index, new FunctionPoint(this.points[index].getX(), y));
+    }
 }
