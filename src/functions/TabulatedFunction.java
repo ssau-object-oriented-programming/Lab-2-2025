@@ -134,8 +134,7 @@ public class TabulatedFunction {
 
     // Метод, изменяющий абсциссу точки по индексу
     public void setPointX(int index, double x) {
-    // читаемость + единичный return сохранены
-    boolean canSet;  //
+    boolean canSet;
 
     if (index < 0 || index >= size) {
         return; // за пределами массива — выходим
