@@ -74,12 +74,14 @@ public class TabulatedFunction {
     }
 
     public void setPoint(int index, FunctionPoint point) {
+        if (index < 0 || index >= points.length) return; 
         if ((index > 0 && point.getX() <= points[index - 1].getX()) ||
                 (index < points.length - 1 && point.getX() >= points[index + 1].getX())) {
             return;
         }
         points[index] = new FunctionPoint(point);
     }
+
 
     public double getPointX(int index) {
         return points[index].getX();
@@ -104,15 +106,12 @@ public class TabulatedFunction {
     public void deletePoint(int index) {
         if (index < 0 || index >= points.length) return;
         FunctionPoint[] newPoints = new FunctionPoint[points.length - 1];
-        // копируем всё до удаляемой точки
         System.arraycopy(points, 0, newPoints, 0, index);
-        // копируем всё после удаляемой точки
         System.arraycopy(points, index + 1, newPoints, index, points.length - index - 1);
         points = newPoints;
     }
     public void addPoint(FunctionPoint point) {
         double x = point.getX();
-        // определяем позицию вставки (перед первой точкой с x >= newX)
         int insertIndex = 0;
         while (insertIndex < points.length && points[insertIndex].getX() < x) {
             insertIndex++;
