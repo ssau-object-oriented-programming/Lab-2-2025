@@ -8,16 +8,31 @@ public class Main {
 
         System.out.println("Левая граница: " + func.getLeftDomainBorder());
         System.out.println("Правая граница: " + func.getRightDomainBorder());
-        System.out.println("Количество точек: " + func.getPointsCount());
+        System.out.println("Исходные точки функции:");
+        printPoints(func);
 
         double x = 2.5;
         System.out.println("Значение функции в точке " + x + ": " + func.getFunctionValue(x));
+        System.out.println();
 
         func.setPointY(2, 10);
-        System.out.println("Новое значение Y в точке 2: " + func.getPointY(2));
+        System.out.println("После изменения Y в точке 2:");
+        printPoints(func);
 
         func.deletePoint(1);
+        System.out.println("После удаления точки 1:");
+        printPoints(func);
+
         func.addPoint(new FunctionPoint(2.2, 5));
-        System.out.println("Количество точек после изменений: " + func.getPointsCount());
+        System.out.println("После добавления точки (2.2, 5):");
+        printPoints(func);
+    }
+
+    private static void printPoints(TabulatedFunction func) {
+        for (int i = 0; i < func.getPointsCount(); i++) {
+            System.out.println("Point " + i + ": (" + func.getPointX(i) + ", " + func.getPointY(i) + ")");
+        }
+        System.out.println();
     }
 }
+
