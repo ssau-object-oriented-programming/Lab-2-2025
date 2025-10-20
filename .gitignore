@@ -1,0 +1,13 @@
+# Java compiled files
+*.class
+
+# System files
+.DS_Store
+
+# Build directories
+target/
+bin/
+
+
+
+
