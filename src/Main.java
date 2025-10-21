@@ -5,6 +5,10 @@ public class Main {
         double value[] = {1,3,5,2,6,7,26,8};
         TabulatedFunction tab = new TabulatedFunction(2, 9, value);
 
+        System.out.println("ТОЧКИ ДО ИЗМЕНЕНИЙ");
+        tab.printTabFun();
+        System.out.println();
+
         System.out.println("ДО ИЗМЕНЕНИЙ");
         System.out.println("f(3.5) = " + tab.getFunctionValue(3.5));
         System.out.println("f(1) = " + tab.getFunctionValue(1));
@@ -22,18 +26,3 @@ public class Main {
         tab.printTabFun();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
