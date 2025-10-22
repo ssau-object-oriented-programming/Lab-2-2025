@@ -37,7 +37,7 @@ public class Main {
         }
 
         System.out.println("\nCalculating function value");
-        double ValueX = 6.5;
+        double ValueX = 7;
         double ValueY = Function.getFunctionValue(ValueX);
         System.out.println("Function value at X = " + ValueX + " is Y = " + ValueY);
     }

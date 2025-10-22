@@ -7,9 +7,6 @@ public class TabulatedFunction{
     private int pointsCount;
 
     public TabulatedFunction(double leftX, double rightX, int pointsCount){
-        this.leftX = leftX;
-        this.rightX = rightX;
-        this.pointsCount = pointsCount;
         this.points = new FunctionPoint[this.pointsCount];
         double step = (rightX - leftX)/(pointsCount - 1);
         for (int i = 0; i < pointsCount; i++){
@@ -18,8 +15,6 @@ public class TabulatedFunction{
     }
 
     public TabulatedFunction(double leftX, double rightX, double[] values){
-        this.leftX = leftX;
-        this.rightX = rightX;
         this.pointsCount = values.length;
         this.points = new FunctionPoint[this.pointsCount];
         double step = (rightX - leftX)/(pointsCount - 1);
@@ -38,18 +33,25 @@ public class TabulatedFunction{
     }
     
     public double getFunctionValue(double x){
-        if (x <= leftX || x >= rightX){
+        if (x < leftX || x > rightX){
             return Double.NaN;
         }
+        if (x == leftX){
+            return points[0].getY();
+        }
+        if (x == rightX){
+            return points[pointsCount - 1].getY();
+        }
         else{
-            int i = 0;
-            double value;
-            while (x > points[i].getX()) i++;
+            int i;
+            double value = 0;
+            for (i = 0; x > points[i].getX(); i++){
                 value = points[i].getY()+(points[i+1].getY() - points[i].getY())*(x-points[i].getX())/(points[i+1].getX()-points[i].getX());
+            }
             return value; 
         }
-
     }
+    
     public int getPointsCount(){
         return pointsCount;
     }
@@ -62,7 +64,7 @@ public class TabulatedFunction{
     }
     
     public void setPoint(int index, FunctionPoint point){
-        if (index <= 0 || index >= pointsCount){
+        if (index < 0 || index >= pointsCount){
             return;
         }
         points[index] = new FunctionPoint(point);
@@ -118,15 +120,8 @@ public class TabulatedFunction{
             pointsCount--;
             points[pointsCount] = null;
         }
-        
-        if (pointsCount == 0){
-        leftX = Double.NaN;
-        rightX = Double.NaN;
-        }
-        else{
             leftX = points[0].getX();
             rightX = points[pointsCount - 1].getX();
-        }
     }
 
 	public void addPoint(FunctionPoint point){
@@ -145,13 +140,6 @@ public class TabulatedFunction{
         rightX = points[pointsCount - 1].getX();
     }
 
-    public FunctionPoint[] getPoints() {
-        return points;
-    }
-
-    public void setPoints(FunctionPoint[] points) {
-        this.points = points;
-    }
 }
 
        
