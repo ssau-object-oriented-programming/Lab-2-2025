@@ -5,6 +5,7 @@ public class TabulatedFunction{
     private double leftX;
     private double rightX;
     private int pointsCount;
+    private final double EPSILON_DOUBLE = 1e-9;
 
     public TabulatedFunction(double leftX, double rightX, int pointsCount){
         this.points = new FunctionPoint[this.pointsCount];
@@ -25,21 +26,22 @@ public class TabulatedFunction{
     }
     
     public double getLeftDomainBorder(){
-        return leftX;
+        return points[0].getX();
     }
     
     public double getRightDomainBorder(){
-        return rightX;
+        return points[pointsCount - 1].getX();
     }
     
     public double getFunctionValue(double x){
-        if (x < leftX || x > rightX){
+        
+        if (x < points[0].getX() || x > points[pointsCount - 1].getX()){
             return Double.NaN;
         }
-        if (x == leftX){
+        if (Math.abs(x - points[0].getX()) < EPSILON_DOUBLE){
             return points[0].getY();
         }
-        if (x == rightX){
+        if (Math.abs(x  - points[pointsCount - 1].getX()) < EPSILON_DOUBLE){
             return points[pointsCount - 1].getY();
         }
         else{
@@ -127,7 +129,7 @@ public class TabulatedFunction{
 	public void addPoint(FunctionPoint point){
         int i = 0;
         while (point.getX() > points[i].getX()) ++i;
-        if(points[i].getX() == point.getX()){
+        if(Math.abs(points[i].getX() - point.getX()) < EPSILON_DOUBLE){
             setPointY(i, point.getY());
             return;
         }
@@ -141,5 +143,3 @@ public class TabulatedFunction{
     }
 
 }
-
-       
