@@ -43,6 +43,8 @@ public class Main {
         System.out.println("Function value at X = " + ValueX + " is Y = " + ValueY);
 
         //Проверка геттер и сеттер методов
+        System.out.println("\n               Checking the get() and set() methods");
+        
         int testIndex = 3;
         if (testIndex > Function.getPointsCount() || testIndex < 0){
             System.out.println("Invalid testIndex");
@@ -51,10 +53,12 @@ public class Main {
             double afterSetPointX = Function.getPointX(testIndex);
             Function.setPointX(testIndex, 6.8);
             if (Math.abs(Function.getPointX(testIndex) - 6.8) > EPSILON_DOUBLE){
-                System.out.println("Problem with get/set method PointX");
+                System.out.println("\nProblem with get/set method PointX");
             }
             else{
+                System.out.println("\nsetPointX has been successfully installed: X = " + Function.getPointX(testIndex));
                 Function.setPointX(testIndex, afterSetPointX);
+                System.out.println("\nThe original X has been restored: " + afterSetPointX);
             }
        
             double afterSetPointY = Function.getPointY(testIndex);
@@ -63,18 +67,22 @@ public class Main {
                 System.out.println("Problem with get/set method PointY");
             }
             else{
+                System.out.println("\nsetPointY has been successfully installed: Y = " + Function.getPointY(testIndex));
                 Function.setPointY(testIndex, afterSetPointY);
+                System.out.println("\nThe original Y has been restored: " + afterSetPointY);
+            }
             }
 
             FunctionPoint afterSetPoint = Function.getPoint(testIndex);
             FunctionPoint testPoint = new FunctionPoint(5, 10);
             Function.setPoint(testIndex, testPoint);
             if(Math.abs(testPoint.getX() - Function.getPointX(testIndex)) > EPSILON_DOUBLE && Math.abs(testPoint.getY() - Function.getPointY(testIndex)) > EPSILON_DOUBLE){
-                System.out.println("Problem with get/set method Point");
+                System.out.println("\nProblem with get/set method Point");
             }
             else{
+                System.out.println("\nsetPoint has been successfully installed: X = " + Function.getPointX(testIndex) + " Y = " + Function.getPointY(testIndex));
                 Function.setPoint(testIndex, afterSetPoint);
-            }
+                System.out.println("\nThe original value of the point has been restored: X = " + Function.getPointX(testIndex) + " Y = " + Function.getPointY(testIndex));
         }
     }
 }
