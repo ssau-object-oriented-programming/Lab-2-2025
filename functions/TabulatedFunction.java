@@ -118,12 +118,14 @@ public class TabulatedFunction {
 
     public void addPoint(FunctionPoint point) {
         int i = 0;
-    while (i < pointsCount && point.getX() > points[i].getX()) {
+        double epcilon=1e-9;
+
+    while (i < pointsCount && Math.abs(point.getX()-points[i].getX())<epcilon) {
         i++;
     }
 
     // Если точка с таким же x уже есть, обновляем y
-    if (i < pointsCount && points[i].getX() == point.getX()) {
+    if (i < pointsCount && Math.abs(point.getX()-points[i].getX())<epcilon) {
         setPointY(i, point.getY());
         return;
     }
