@@ -14,7 +14,7 @@ public class Main {
         System.out.println("Квадратичная функция y = x^2:");
         // выводим все точки функции
         for (int i = 0; i < quadraticFunc.getPointsCount(); i++) {
-            System.out.printf("(%.1f, %.1f) ", quadraticFunc.getPointX(i), quadraticFunc.getPointY(i));
+            System.out.printf("(%.2f, %.2f) ", quadraticFunc.getPointX(i), quadraticFunc.getPointY(i));
         }
         System.out.println();
 
@@ -25,7 +25,7 @@ public class Main {
         System.out.println("После добавления точек:");
         // снова выводим все точки чтобы увидеть изменения
         for (int i = 0; i < quadraticFunc.getPointsCount(); i++) {
-            System.out.printf("(%.1f, %.1f) ", quadraticFunc.getPointX(i), quadraticFunc.getPointY(i));
+            System.out.printf("(%.2f, %.2f) ", quadraticFunc.getPointX(i), quadraticFunc.getPointY(i));
         }
         System.out.println();
 
@@ -35,7 +35,7 @@ public class Main {
         System.out.println("После удаления точки:");
         // выводим точки после удаления
         for (int i = 0; i < quadraticFunc.getPointsCount(); i++) {
-            System.out.printf("(%.1f, %.1f) ", quadraticFunc.getPointX(i), quadraticFunc.getPointY(i));
+            System.out.printf("(%.2f, %.2f) ", quadraticFunc.getPointX(i), quadraticFunc.getPointY(i));
         }
         System.out.println();
 
@@ -45,7 +45,7 @@ public class Main {
         System.out.println("После изменения точки:");
         // выводим точки после изменения
         for (int i = 0; i < quadraticFunc.getPointsCount(); i++) {
-            System.out.printf("(%.1f, %.1f) ", quadraticFunc.getPointX(i), quadraticFunc.getPointY(i));
+            System.out.printf("(%.2f, %.2f) ", quadraticFunc.getPointX(i), quadraticFunc.getPointY(i));
         }
         System.out.println();
 
@@ -54,21 +54,21 @@ public class Main {
         double[] testX = {0.5, 1.2, 2.5, 3.2, 6.8};
         for (double x : testX) {
             // вычисляем значение функции в каждой тестовой точке
-            System.out.printf("f(%.1f) = %.2f\n", x, quadraticFunc.getFunctionValue(x));
+            System.out.printf("f(%.2f) = %.2f\n", x, quadraticFunc.getFunctionValue(x));
         }
 
         // выводим границы области определения
-        System.out.printf("Область определения: [%.1f, %.1f]\n", quadraticFunc.getLeftDomainBorder(), quadraticFunc.getRightDomainBorder());
+        System.out.printf("Область определения: [%.2f, %.2f]\n", quadraticFunc.getLeftDomainBorder(), quadraticFunc.getRightDomainBorder());
 
         // проверяем поведение функции вне области определения
         System.out.println("Вне области определения:");
-        System.out.printf("f(-1) = %.1f\n", quadraticFunc.getFunctionValue(-1));
-        System.out.printf("f(11) = %.1f\n", quadraticFunc.getFunctionValue(11));
+        System.out.printf("f(-1) = %.2f\n", quadraticFunc.getFunctionValue(-1));
+        System.out.printf("f(11) = %.2f\n", quadraticFunc.getFunctionValue(11));
 
         System.out.println("Финальное состояние:");
         // выводим конечное состояние всех точек
         for (int i = 0; i < quadraticFunc.getPointsCount(); i++) {
-            System.out.printf("(%.1f, %.1f) ", quadraticFunc.getPointX(i), quadraticFunc.getPointY(i));
+            System.out.printf("(%.2f, %.2f) ", quadraticFunc.getPointX(i), quadraticFunc.getPointY(i));
         }
         System.out.println();
     }
