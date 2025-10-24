@@ -46,13 +46,15 @@ public class TabulatedFunction {
     // вычислить значение функции в заданной точке x
     public double getFunctionValue(double x){
         // если точек нет возвращаем не число
-        if(point_count == 0) return Double.NaN;
+        if(point_count == 0){
+            return Double.NaN;
+        }
 
         // проверяем что x находится в области определения
         if(x >= point_mass[0].getX() && x <= point_mass[point_count-1].getX()){
             // ищем точку с точно таким же x
             for(int i = 0; i < point_count; i++){
-                if(point_mass[i].getX() == x){
+                if(Math.abs(point_mass[i].getX() - x) < 1e-10){
                     // если нашли возвращаем соответствующий y
                     return point_mass[i].getY();
                 }
@@ -151,7 +153,7 @@ public class TabulatedFunction {
             ins_index++;
         }
         // если точка с таким x уже существует выходим
-        if (ins_index < point_count && point_mass[ins_index].getX() == point.getX()) {
+        if (ins_index < point_count && Math.abs(point_mass[ins_index].getX() - point.getX()) < 1e-10) {
             return;
         }
         // проверяем нужно ли увеличивать массив
@@ -159,8 +161,9 @@ public class TabulatedFunction {
             // удваиваем размер массива
             int newcap = point_mass.length * 2;
             // если массив был пустой устанавливаем размер 1
-            if (newcap == 0) newcap = 1;
-
+            if (newcap == 0) {
+                newcap = 1;
+            }
             // создаем новый массив большего размера
             FunctionPoint[] newArray = new FunctionPoint[newcap];
             // копируем старые точки в новый массив
