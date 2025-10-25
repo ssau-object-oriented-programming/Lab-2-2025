@@ -3,7 +3,8 @@ package functions;
 
 public class TabulatedFunction {
     private FunctionPoint[] points; //массив точек
- 
+	private static final double EPSILON = 1e-10;
+	
     // Конструктор 1:
     public TabulatedFunction(double leftX, double rightX, int pointsCount) {
      
@@ -53,10 +54,10 @@ public class TabulatedFunction {
             double y2 = points[i + 1].getY();
             
             
-            if (x == x1) {
+            if (Math.abs(x - x1) < EPSILON) {
                 return y1;
             }
-            if (x == x2) {
+            if (Math.abs(x - x2) < EPSILON) {
                 return y2;
             }
             
@@ -132,7 +133,7 @@ public class TabulatedFunction {
             i++;
         }
 	// Если точка с таким X уже существует - выходим
-	if (i < points.length && point.getX() == points[i].getX()){
+	if (i < points.length && Math.abs(point.getX() - points[i].getX()) < EPSILON){
             return;
         }
 	// Копируем старый массив, вставляя новую точку в нужную позицию
