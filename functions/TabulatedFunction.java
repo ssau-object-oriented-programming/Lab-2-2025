@@ -39,15 +39,28 @@ package functions;
         this.pointsCount = values.length;
         this.points = new FunctionPoint[pointsCount + 2];
 
-        double step = (rightX - leftX) / (pointsCount - 1);
-        
-        // Создаем точки с заданными значениями y
-        for (int i = 0; i < pointsCount; i++) {
-            double x = leftX + i * step;
-            points[i] = new FunctionPoint(x, values[i]);  // Используем переданные значения y
+        // Проверка на перепутанные границы
+        if (leftX > rightX) {
+            double temp = leftX;
+            leftX = rightX;
+            rightX = temp;
+        }
+
+        // Проверка на совпадающие границы
+        if (Math.abs(rightX - leftX) < EPSILON) {
+            // Если границы совпадают - создаем точки с одинаковым X
+            for (int i = 0; i < pointsCount; i++) {
+                points[i] = new FunctionPoint(leftX, values[i]);
+            }
+        } else {
+            // Если границы разные - стандартная логика с шагом
+            double step = (rightX - leftX) / (pointsCount - 1);
+            for (int i = 0; i < pointsCount; i++) {
+                double x = leftX + i * step;
+                points[i] = new FunctionPoint(x, values[i]);
+            }
         }
     }
-
     // МЕТОДЫ ДЛЯ РАБОТЫ С ФУНКЦИЕЙ
     public double getLeftDomainBorder() {
         return points[0].getX();  // Первая точка - самая левая
@@ -102,10 +115,10 @@ package functions;
         }
 
         // Проверяем,что новая x координата находится между соседями
-        if (index > 0 && point.getX() <= points[index - 1].getX() + EPSILON) {
+        if (index > 0 && point.getX() < points[index - 1].getX() + EPSILON) {
             return; 
         }
-        if (index < pointsCount - 1 && point.getX() >= points[index + 1].getX() - EPSILON) {
+        if (index < pointsCount - 1 && point.getX() > points[index + 1].getX() - EPSILON) {
             return;
         }
 
@@ -129,10 +142,10 @@ package functions;
         }
 
         // Проверяем границы
-        if (index > 0 && x <= points[index - 1].getX() + EPSILON) {
+        if (index > 0 && x < points[index - 1].getX() + EPSILON) {
             return;
         }
-        if (index < pointsCount - 1 && x >= points[index + 1].getX() - EPSILON) {
+        if (index < pointsCount - 1 && x > points[index + 1].getX() - EPSILON) {
             return;
         }
 
