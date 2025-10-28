@@ -153,19 +153,46 @@ public class TabulatedFunction {
     }
 
     public void setPointX(int index, double x) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index >= points.size()) {
             throw new IndexOutOfBoundsException("Index out of bounds: " + index);
         }
 
-        if (!isValidXPosition(index, x)) {
-            throw new IllegalArgumentException(
-                    "New x-coordinate " + x + " at index " + index +
-                            " would violate the ordering of points"
-            );
+        // Получаем текущие значения точки
+        double currentX = points.get(index).getX();
+        double y = points.get(index).getY();
+
+        // Если x не изменился, ничего не делаем
+        if (Math.abs(currentX - x) < 1e-10) {
+            return;
         }
 
-        double y = points[index].getY();
-        points[index] = new FunctionPoint(x, y);
+        // Создаем временную копию точки для проверки
+        FunctionPoint tempPoint = new FunctionPoint(x, y);
+
+        // Проверяем, не существует ли уже точки с таким x
+        for (int i = 0; i < points.size(); i++) {
+            if (i != index && Math.abs(points.get(i).getX() - x) < 1e-10) {
+                throw new IllegalArgumentException("Point with x=" + x + " already exists");
+            }
+        }
+
+        // Удаляем точку из текущей позиции
+        FunctionPoint pointToMove = points.remove(index);
+        pointToMove = new FunctionPoint(x, y); // Обновляем x
+
+        // Находим новую позицию для точки с учетом нового x
+        int newIndex = 0;
+        while (newIndex < points.size() && points.get(newIndex).getX() < x) {
+            newIndex++;
+        }
+
+        // Вставляем точку на новую позицию
+        points.add(newIndex, pointToMove);
+
+        // Если позиция изменилась, выводим информационное сообщение
+        if (index != newIndex) {
+            System.out.println("Точка перемещена с позиции " + index + " на позицию " + newIndex);
+        }
     }
 
     public double getPointY(int index) {
