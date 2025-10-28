@@ -1,9 +1,10 @@
 package functions;
 
  //Класс хранит точки в упорядоченном массиве
-public class TabulatedFunction {
+    public class TabulatedFunction {
     private FunctionPoint[] points;     // Массив для хранения точек
     private int pointsCount;           // Фактическое количество точек
+    private static final double EPSILON = 1e-10; // Машинный эпсилон для сравнений
 
     // КОНСТРУКТОРЫ:
     public TabulatedFunction(double leftX, double rightX, int pointsCount) {
@@ -58,7 +59,7 @@ public class TabulatedFunction {
 
     public double getFunctionValue(double x) {
         // Проверка что x в области определения
-        if (x < getLeftDomainBorder() || x > getRightDomainBorder()) {
+        if (x < getLeftDomainBorder() - EPSILON || x > getRightDomainBorder() + EPSILON) {
             return Double.NaN;  // Не число -точка вне области определения
         }
 
@@ -67,7 +68,7 @@ public class TabulatedFunction {
             double x1 = points[i].getX();
             double x2 = points[i + 1].getX();
             
-            if (x >= x1 && x <= x2) {
+            if (x >= x1 - EPSILON && x <= x2 + EPSILON) {
                 double y1 = points[i].getY();
                 double y2 = points[i + 1].getY();
                 
@@ -101,10 +102,10 @@ public class TabulatedFunction {
         }
 
         // Проверяем,что новая x координата находится между соседями
-        if (index > 0 && point.getX() <= points[index - 1].getX()) {
+        if (index > 0 && point.getX() <= points[index - 1].getX() + EPSILON) {
             return; 
         }
-        if (index < pointsCount - 1 && point.getX() >= points[index + 1].getX()) {
+        if (index < pointsCount - 1 && point.getX() >= points[index + 1].getX() - EPSILON) {
             return;
         }
 
@@ -128,10 +129,10 @@ public class TabulatedFunction {
         }
 
         // Проверяем границы
-        if (index > 0 && x <= points[index - 1].getX()) {
+        if (index > 0 && x <= points[index - 1].getX() + EPSILON) {
             return;
         }
-        if (index < pointsCount - 1 && x >= points[index + 1].getX()) {
+        if (index < pointsCount - 1 && x >= points[index + 1].getX() - EPSILON) {
             return;
         }
 
@@ -171,12 +172,12 @@ public class TabulatedFunction {
     // Добавляет новую точку в функцию (с сохранением упорядоченности)
     public void addPoint(FunctionPoint point) {
         int insertIndex = 0;
-        while (insertIndex < pointsCount && points[insertIndex].getX() < point.getX()) {
+        while (insertIndex < pointsCount && points[insertIndex].getX() < point.getX() - EPSILON) {
             insertIndex++;
         }
 
         // Проверяем, нет ли точки с таким же x
-        if (insertIndex < pointsCount && points[insertIndex].getX() == point.getX()) {
+        if (insertIndex < pointsCount && Math.abs(points[insertIndex].getX() - point.getX()) < EPSILON) {
             return;
         }
 
