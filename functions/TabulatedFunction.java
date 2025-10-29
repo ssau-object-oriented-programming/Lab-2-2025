@@ -5,6 +5,18 @@ public class TabulatedFunction {
     private FunctionPoint[] points_arr;
     private int pointslength;
 
+    public static boolean compareDouble(double a, double b) {
+        final double epsilon = 1e-10;
+        double diff = a - b;
+
+        if (diff < -epsilon && diff > epsilon) {
+            return false;  
+        }
+        else {
+            return true;   
+        }
+    }
+    
     public TabulatedFunction(double leftX, double rightX, int pointsCount) {
         points_arr = new FunctionPoint[pointsCount];
         pointslength = pointsCount;
@@ -52,8 +64,8 @@ public class TabulatedFunction {
         int findex=0, sindex=0;
 
         if(x < getLeftDomainBorder() || x > getRightDomainBorder()){return Double.NaN;}
-        if(x == getLeftDomainBorder()){return points_arr[0].getY();}
-        if(x == getRightDomainBorder()){return points_arr[pointslength-1].getY();}
+        if(compareDouble(x,getLeftDomainBorder())){return points_arr[0].getY();}
+        if(compareDouble(x,getRightDomainBorder())){return points_arr[pointslength-1].getY();}
 
         for(int i = 0; i < pointslength-1; i++){
             if(points_arr[i].getX() <= x && points_arr[i + 1].getX() >= x){
@@ -127,3 +139,4 @@ public class TabulatedFunction {
         points_arr = temp_arr;
         pointslength++;
     }
+}
