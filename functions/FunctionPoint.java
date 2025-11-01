@@ -5,7 +5,7 @@ public class FunctionPoint
     private double x;
     private double y;
 
-    // констуктор по умолчанию
+    // конструктор по умолчанию
     public FunctionPoint()
     {
         this.x = 0;
@@ -22,8 +22,8 @@ public class FunctionPoint
     // конструктор копирования
     public FunctionPoint(FunctionPoint point)
     {
-        this.x = point.getX();
-        this.y = point.getY();
+        this.x = point.x;
+        this.y = point.y;
     }
 
     // геттеры
