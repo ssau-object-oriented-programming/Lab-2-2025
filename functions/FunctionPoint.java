@@ -3,7 +3,16 @@ package functions;
 public class FunctionPoint{
 
     private double coorX, coorY; // Координаты X, Y
+    public static final double epsilon; // Создадим статическое поле, которое отвечает за машинный epsilon
 
+
+    static{
+        double eps = 1.0;
+        while (1.0 + eps / 2.0 != 1.0) {
+            eps /= 2.0;
+        }
+        epsilon = eps;
+    }
     public FunctionPoint(double x, double y){ // Конструктор с двумя параметрами
         this.coorX = x;
         this.coorY = y;

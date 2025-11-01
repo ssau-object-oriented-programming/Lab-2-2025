@@ -1,5 +1,6 @@
 package functions;
 
+
 public class TabulatedFunction { 
     private double leftDomainBorder, rightDomainBorder; // Левая и правая границы
 
@@ -52,12 +53,12 @@ public class TabulatedFunction {
 
         for (int i = 0; i < size - 1; ++i){ // Перебараем в цикле все отрезки интервала
 
-            if (x >= points[i].getCoorX() && x < points[i+1].getCoorX()){ // Если x входит в определённый отрезок
+            if (((x > points[i].getCoorX()) || (Math.abs(x - points[i].getCoorX()) <= FunctionPoint.epsilon)) && x < points[i+1].getCoorX()){ // Если x входит в определённый отрезок
                 return interpolate(x, points[i].getCoorX(), points[i].getCoorY(), points[i+1].getCoorX(), points[i+1].getCoorY());
             }
         }
 
-        if (x == points[size-1].getCoorX()){ // Если x является правой границей интервала
+        if (Math.abs(x - points[size-1].getCoorX()) <= FunctionPoint.epsilon){ // Если x является правой границей интервала
             return points[size-1].getCoorY();
         }
 
@@ -159,7 +160,7 @@ public class TabulatedFunction {
         }
 
         for (int i = 0; i < size; ++i){
-            if (point_x == points[i].getCoorX()){ // Если точка по x совпадает с другой точкой
+            if (Math.abs(point_x - points[i].getCoorX()) <= FunctionPoint.epsilon){ // Если точка по x совпадает с другой точкой
                 throw new IllegalArgumentException("Точка должна иметь уникальное значение x");
             }
         }
