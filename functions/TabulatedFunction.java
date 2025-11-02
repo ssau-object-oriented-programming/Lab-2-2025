@@ -4,6 +4,7 @@ public class TabulatedFunction
 {
     private FunctionPoint[] points;
     private int amountOfElements;
+    private static final double EPSILON = 1e-10;
 
     // констурктор для границ координат и количества точек
     public TabulatedFunction(double leftX, double rightX, int pointsCount)
@@ -64,8 +65,9 @@ public class TabulatedFunction
             double x1 = this.points[i].getX();
             double x2 = this.points[i + 1].getX();
 
-            if(x == x1) return this.points[i].getY();
-            if(x == x2) return this.points[i + 1].getY();
+            // сравниваем с машинным эпсилоном для корректного результата
+            if(Math.abs(x - x1) < EPSILON) return this.points[i].getY();
+            if(Math.abs(x - x2) < EPSILON) return this.points[i + 1].getY();
 
             if(x > x1 && x < x2)
             {
@@ -97,17 +99,18 @@ public class TabulatedFunction
     // замена точки по заданному индексу
     public void setPoint(int index, FunctionPoint point)
     {
-        if (index < 0 || index >= this.amountOfElements) return;
+        if(index < 0 || index >= this.amountOfElements) return;
 
-        // проверка для первой точки
-        if (index == 0 && this.amountOfElements > 1 && point.getX() >= points[1].getX()) return;
+        // использование приближенного сравнения для граничных условий
+        if (index == 0 && this.amountOfElements > 1 &&
+                point.getX() >= points[1].getX() - EPSILON) return;
 
-        // проверка для последней точки
-        if (index == this.amountOfElements - 1 && point.getX() <= points[index - 1].getX()) return;
+        if (index == this.amountOfElements - 1 &&
+                point.getX() <= points[index - 1].getX() + EPSILON) return;
 
-        // проверка для средней точки
         if (index > 0 && index < this.amountOfElements - 1 &&
-                (point.getX() <= points[index - 1].getX() || point.getX() >= points[index + 1].getX()))
+                (point.getX() <= points[index - 1].getX() + EPSILON ||
+                        point.getX() >= points[index + 1].getX() - EPSILON))
         {
             return;
         }
@@ -140,23 +143,29 @@ public class TabulatedFunction
     // замена значения Х в точке с заданным индексом
     public void setPointX(int index, double x)
     {
-        if(index < 0 || index >= this.points.length)
+        if(index < 0 || index >= this.amountOfElements) return;
+
+        // проверки из setPoint() адаптированные для setPointX()(для избежания избыточности кода)
+        if (index == 0 && this.amountOfElements > 1 && x >= points[1].getX() - EPSILON) return;
+
+        if (index == this.amountOfElements - 1 && x <= points[index - 1].getX() + EPSILON) return;
+
+        if (index > 0 && index < this.amountOfElements - 1 &&
+                (x <= points[index - 1].getX() + EPSILON || x >= points[index + 1].getX() - EPSILON))
         {
             return;
         }
 
-        this.setPoint(index, new FunctionPoint(x, this.points[index].getY()));
+        // если все проверки пройдены - меняем X
+        this.points[index].setX(x);
     }
 
-    // замена значения Н в точке с заданным индексом
+    // замена значения Y в точке с заданным индексом
     public void setPointY(int index, double y)
     {
-        if(index < 0 || index >= this.points.length)
-        {
-            return;
-        }
+        if(index < 0 || index >= this.amountOfElements) return;
 
-        this.setPoint(index, new FunctionPoint(this.points[index].getX(), y));
+        this.points[index].setY(y);
     }
 
     // удаление точки
@@ -183,7 +192,8 @@ public class TabulatedFunction
         // находим позицию для вставки
         for(; insertIndex < this.amountOfElements; insertIndex++)
         {
-            if(this.points[insertIndex].getX() == pointX)
+            // сравниваем с машинным эпсилоном для избежания погрешности представления
+            if(Math.abs(this.points[insertIndex].getX() - pointX) < EPSILON)
             {
                 return; // точка с таким X уже существует
             }
