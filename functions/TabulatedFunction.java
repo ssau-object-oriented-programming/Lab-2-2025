@@ -66,10 +66,10 @@ public class TabulatedFunction {
     //замена точку по индексу
     public void setPoint(int index, FunctionPoint point) {
         // проверка что x между соседними точками
-        if (index > 0 && point.get_x() <= points[index - 1].get_x()) {
+        if (index > 0 && point.get_x() <= points[index - 1].get_x() + 1e-10) {
             return;  //x меньше предыдущей точки
         }
-        if (index < pointsCount - 1 && point.get_x() >= points[index + 1].get_x()) {
+        if (index < pointsCount - 1 && point.get_x() >= points[index + 1].get_x() - 1e-10) {
             return;  //x больше следующей точки
         }
 
@@ -81,18 +81,36 @@ public class TabulatedFunction {
         return points[index].get_x();
     }
 
-    //изменяет х точки по индексу
+    //изменяет x точки по индексу
     public void setPointX(int index, double x) {
-        //если х правильный
-        if (index > 0 && x <= points[index - 1].get_x()) {
-            return;  //x меньше предыдущей точки
-        }
-        if (index < pointsCount - 1 && x >= points[index + 1].get_x()) {
-            return;  //x больше следующей точки
+        if (index < 0 || index >= pointsCount) {
+            return;  // некорректный индекс
         }
 
-        points[index].set_x(x);  // изменяем х
+        // левая и правая границы текущей функции
+        double leftBorder = getLeftDomainBorder();
+        double rightBorder = getRightDomainBorder();
+
+        // Проверка для первой точки
+        if (index == 0  && (x < leftBorder || (pointsCount > 1 && x >= points[1].get_x() - 1e-10))) {
+            return; //х выходит за лев границу и больше след точки
+        }
+        // Проверка для последней точки
+        else if (index == pointsCount - 1 && (x > rightBorder || x <= points[pointsCount - 2].get_x() + 1e-10)) {
+            return;
+        }
+        // Проверка для внутренних точек
+        else {
+            if (x <= points[index - 1].get_x() + 1e-10 || x >= points[index + 1].get_x() - 1e-10) {
+                return;
+            }
+        }
+
+        points[index].set_x(x);
     }
+
+
+
 
 
     public double getPointY(int index) {
@@ -115,12 +133,12 @@ public class TabulatedFunction {
     //добавление точки
     public void addPoint(FunctionPoint point) {
         int insertIndex = 0;
-        while (insertIndex < pointsCount && points[insertIndex].get_x() < point.get_x()) {
+        while (insertIndex < pointsCount && points[insertIndex].get_x() < point.get_x() - 1e-10) {
             insertIndex++; //позиция для вставки
         }
 
         //проверка что точка с таким X еще не существует
-        if (insertIndex < pointsCount && points[insertIndex].get_x() == point.get_x()) {
+        if (insertIndex < pointsCount && Math.abs(points[insertIndex].get_x() - point.get_x()) < 1e-10) {
             return;  // точка с таким X уже есть
         }
 
