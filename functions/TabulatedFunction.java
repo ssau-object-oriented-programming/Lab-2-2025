@@ -5,6 +5,9 @@ public class TabulatedFunction {
     private FunctionPoint[] points;
     private int pointsCount;
 
+    //Машинный эпсилон, нужен для того, чтобы сравнивать переменные с типами double и float
+    final double EPS = 1e-9;
+
     //Конструктор, создающий табулированную функцию с равномерными интервалами по X. Значения функции по умолчанию равны 0.
     public TabulatedFunction(double leftX, double rightX, int pointsCount) {
 
@@ -59,7 +62,7 @@ public class TabulatedFunction {
 
         // Если x совпадает с одной из табличных точек
         for (int i = 0; i < pointsCount; i++) {
-            if (x == points[i].getX()) {
+            if (Math.abs(x - points[i].getX()) < EPS) {
                 return points[i].getY();
             }
         }
@@ -102,10 +105,10 @@ public class TabulatedFunction {
         double newX = point.getX();
 
         // Для индексa = 0 или index = pointsCount-1 соответствующая проверка просто пропускается.
-            if (index > 0 && newX <= points[index - 1].getX()) {
+            if (index > 0 && newX <= points[index - 1].getX() + EPS) {
                 return; // нарушит порядок слева
             }
-            if (index < pointsCount - 1 && newX >= points[index + 1].getX()) {
+            if (index < pointsCount - 1 && newX >= points[index + 1].getX() - EPS) {
                 return; // нарушит порядок справа
             }
 
@@ -125,10 +128,10 @@ public class TabulatedFunction {
         }
 
         if (pointsCount > 1) {
-            if (index > 0 && x <= points[index - 1].getX()) {
+            if (index > 0 && x <= points[index - 1].getX() + EPS) {
                 return; // нарушит порядок слева
             }
-            if (index < pointsCount - 1 && x >= points[index + 1].getX()) {
+            if (index < pointsCount - 1 && x >= points[index + 1].getX() - EPS) {
                 return; // нарушит порядок справа
             }
         }
@@ -167,7 +170,7 @@ public class TabulatedFunction {
 
         // Проверяем, нет ли уже такой точки
         for (int i = 0; i < pointsCount; i++) {
-            if (points[i].getX() == newX) {
+            if (Math.abs(points[i].getX() - newX) < EPS) {
                 return; // такая точка уже есть — ничего не делаем
             }
         }
