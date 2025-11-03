@@ -47,8 +47,8 @@ public class TabulatedFunction{
                 double x2 = points[i + 1].getX();
 
                 if (x >= x1 && x <= x2) {
-                    if (x == x1) return points[i].getY();
-                    if (x == x2) return points[i + 1].getY();
+                    if (Math.abs(x - x1) < 1e-10) return points[i].getY();
+                    if (Math.abs(x - x2) < 1e-10) return points[i + 1].getY();
 
                     double y1 = points[i].getY();
                     double y2 = points[i + 1].getY();
