@@ -61,7 +61,12 @@ public class TabulatedFunction {
         size--;
 
         // Если массив слишком пустой, уменьшаем его размер (но не меньше начального + 2)
-        if (points.length > size * 2 && points.length > 4) {
+        // Используем машинный эпсилон для сравнения чисел с плавающей точкой
+        double loadFactor = (double) size / points.length;
+        double minLoadFactor = 0.5; // 50% заполненности
+
+        // Сравнение с учетом машинного эпсилона
+        if (loadFactor + Math.ulp(loadFactor) < minLoadFactor && points.length > 4) {
             shrinkArray();
         }
     }

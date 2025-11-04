@@ -30,14 +30,14 @@ public class Main {
         System.out.println("\n3. Модификация точек:");
 
         // Изменяем значение y в точке x=2
-        System.out.println("До изменения: " + func.getPoint(2));
+        System.out.println("До изменения: (" + func.getPoint(2).getX() + ", " + func.getPoint(2).getY() + ")");
         func.setPointY(2, 5.0);
-        System.out.println("После setPointY(2, 5.0): " + func.getPoint(2));
+        System.out.println("После setPointY(2, 5.0): (" + func.getPoint(2).getX() + ", " + func.getPoint(2).getY() + ")");
 
         // Пытаемся изменить x точки (должно сохранить упорядоченность)
         try {
             func.setPointX(2, 1.5);
-            System.out.println("После setPointX(2, 1.5): " + func.getPoint(2));
+            System.out.println("После setPointX(2, 1.5): (" + func.getPoint(2).getX() + ", " + func.getPoint(2).getY() + ")");
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка при setPointX: " + e.getMessage());
         }
@@ -61,7 +61,7 @@ public class Main {
         System.out.println("\n5. Удаление точек:");
 
         // Удаляем точку с индексом 2
-        System.out.println("Удаляем точку с индексом 2: " + func.getPoint(2));
+        System.out.println("Удаляем точку с индексом 2: (" + func.getPoint(2).getX() + ", " + func.getPoint(2).getY() + ")");
         func.deletePoint(2);
         System.out.println("После удаления:");
         System.out.println("Количество точек: " + func.getPointsCount());
@@ -108,14 +108,14 @@ public class Main {
         // 8. Проверка инкапсуляции
         System.out.println("\n8. Проверка инкапсуляции:");
         FunctionPoint testPoint = func.getPoint(0);
-        System.out.println("Полученная точка: " + testPoint);
+        System.out.println("Полученная точка: (" + testPoint.getX() + ", " + testPoint.getY() + ")");
 
         // Меняем полученную точку (не должна влиять на оригинал)
         testPoint.setX(999);
         testPoint.setY(999);
         System.out.println("После изменения полученной точки:");
-        System.out.println("Полученная точка: " + testPoint);
-        System.out.println("Оригинальная точка в функции: " + func.getPoint(0));
+        System.out.println("Полученная точка: (" + testPoint.getX() + ", " + testPoint.getY() + ")");
+        System.out.println("Оригинальная точка в функции: (" + func.getPoint(0).getX() + ", " + func.getPoint(0).getY() + ")");
 
         System.out.println("\n=== Тестирование завершено ===");
     }
