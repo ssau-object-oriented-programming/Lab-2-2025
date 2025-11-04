@@ -2,6 +2,12 @@ import functions.FunctionPoint;
 import functions.TabulatedFunction;
 
 public class Main {
+    private static final double EPSILON = 1e-10;
+    //Сравнение чисел с плавающей точкой
+    public static boolean doubleEqual(double a, double b) {
+        return Math.abs(a - b) < EPSILON;
+    }
+
     public static void main(String[] args) {
         System.out.println("Создание экземпляра класса через первый конструктор: ");
         TabulatedFunction f = new TabulatedFunction(0, 6, 10);
@@ -38,7 +44,7 @@ public class Main {
         System.out.printf("Исходная точка %d: (%.2f; %.2f)%n", 3, f.getPointX(2), f.getPointY(2));
         FunctionPoint test1 = new FunctionPoint(7, 15);
         f.setPoint(2, test1);
-        if (f.getPointX(2) == test1.getX()) {
+        if (doubleEqual(f.getPointX(2), test1.getX())) {
             System.out.println("\nЗамена точки №3 прошла успешно");
         }
         else {
@@ -51,8 +57,8 @@ public class Main {
         System.out.printf("Исходная точка %d: (%.2f; %.2f)%n", 8, f.getPointX(7), f.getPointY(7));
         FunctionPoint test2 = new FunctionPoint(5, 11);
         f.setPoint(7, test2);
-        if (f.getPointX(7) == test2.getX()) {
-            System.out.println("Замена точки №3 прошла успешно");
+        if (doubleEqual(f.getPointX(7), test2.getX())) {
+            System.out.println("Замена точки №8 прошла успешно");
         }
         else {
             System.out.println("Замена не удалась, так как х не попал в интервал");
@@ -63,7 +69,7 @@ public class Main {
         System.out.println("\nЗамена точки №2 на точку с координатой х = 1");
         System.out.printf("Исходная точка %d: (%.2f; %.2f)%n", 2, f.getPointX(1), f.getPointY(1));
         f.setPointX(1,1);
-        if (f.getPointX(1) == 1) {
+        if (doubleEqual(f.getPointX(1),1)) {
             f.setPointY(1,3);
             System.out.println("Замена точки №2 прошла успешно");
         }
@@ -76,9 +82,9 @@ public class Main {
         System.out.println("\nЗамена точки №9 на точку с координатой х = 4.9");
         System.out.printf("Исходная точка %d: (%.2f; %.2f)%n", 9, f.getPointX(8), f.getPointY(8));
         f.setPointX(8,4.9);
-        if (f.getPointX(8) == 4.9) {
+        if (doubleEqual(f.getPointX(8),4.9)) {
             f.setPointY(8,4.9*2+1);
-            System.out.println("Замена точки №2 прошла успешно");
+            System.out.println("Замена точки №9 прошла успешно");
         }
         else {
             System.out.println("Замена не удалась, так как х не попал в интервал");

@@ -34,27 +34,46 @@ public class TabulatedFunction {
             points[i] = new FunctionPoint(x, values[i]);
         }
     }
-
+    public static final double EPSILON = 1e-10;
+    //Сравнение чисел с плавающей точкой
+    //равенство
+    public static boolean doubleEq(double a, double b) {
+        return Math.abs(a - b) < EPSILON;
+    }
+    //строго меньше
+    public static boolean doubleLess(double a, double b) {
+        return a < b - EPSILON;
+    }
+    //сторого больше
+    public static boolean doubleGreater(double a, double b) {
+        return a > b + EPSILON;
+    }
+    //меньше или равно
+    public static boolean doubleLessOrEq(double a, double b) {
+        return doubleLess(a,b) || doubleEq(a,b);
+    }
+    //больше или равно
+    public static boolean doubleGreaterOrEq(double a, double b) {
+        return doubleGreater(a,b) || doubleEq(a,b);
+    }
     public double getLeftDomainBorder() {
         return points[0].getX();
     }
-
     public double getRightDomainBorder() {
         return points[pointsCount - 1].getX();
     }
-
     //Возвращает значение функции в точке х, если точка лежит в обл. определения
     public double getFunctionValue(double x) {
-        if (x < getLeftDomainBorder() || x > getRightDomainBorder()) {
+        if (doubleLess(x,getLeftDomainBorder()) || doubleGreater(x,getRightDomainBorder())) {
             return Double.NaN;
         }
 
         for (int i = 0; i < pointsCount - 1; i++) {
-            if (x >= points[i].getX() && x <= points[i + 1].getX()) {
-                if (x == points[i].getX()) {
+            if (doubleGreaterOrEq(x,points[i].getX()) && doubleLessOrEq(x,points[i + 1].getX())) {
+                if (doubleEq(x,points[i].getX())) {
                     return points[i].getY();
                 }
-                else if (x == points[i + 1].getX()) {
+                else if (doubleEq(x,points[i + 1].getX())) {
                     return points[i + 1].getY();
                 }
                 else {
@@ -86,13 +105,13 @@ public class TabulatedFunction {
 
         if (index > 0) {
             //если newX меньше левой границы
-            if (newX <= points[index - 1].getX()) {
+            if (doubleLessOrEq(newX,points[index - 1].getX())) {
                 return;
             }
         }
         if (index < pointsCount - 1) {
             //если newX больше правой границы
-            if (newX >= points[index + 1].getX()) {
+            if (doubleGreaterOrEq(newX,points[index + 1].getX())) {
                 return;
             }
         }
@@ -111,13 +130,13 @@ public class TabulatedFunction {
     public void setPointX(int index, double x) {
         if (index > 0) {
             //если x меньше левой границы
-            if (x <= points[index - 1].getX()) {
+            if (doubleLessOrEq(x, points[index - 1].getX())) {
                 return;
             }
         }
         if (index < pointsCount - 1) {
             //если x больше правой границы
-            if (x >= points[index + 1].getX()) {
+            if (doubleGreaterOrEq(x, points[index + 1].getX())) {
                 return;
             }
         }
@@ -143,7 +162,7 @@ public class TabulatedFunction {
     public void addPoint(FunctionPoint point) {
 
         int searchIndex = 0;
-        while (searchIndex < pointsCount && point.getX() > points[searchIndex].getX()) {
+        while (searchIndex < pointsCount && doubleGreater(point.getX(), points[searchIndex].getX())) {
             searchIndex++;
         }
 
