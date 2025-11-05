@@ -35,7 +35,7 @@ public class TabulatedFunction {
         return points[size - 1].getX();
     }
     public double getFunctionValue(double x) {
-        if (x < getLeftDomainBorder() || x > getRightDomainBorder()) {
+        if (x < getLeftDomainBorder() - 1e-10 || x > getRightDomainBorder() + 1e-10) {
             return Double.NaN;
         }
         for (int i = 0; i < size - 1; i++) {
@@ -44,8 +44,9 @@ public class TabulatedFunction {
             double y0 = points[i].getY();
             double y1 = points[i + 1].getY();
 
-            if (x == x0) return y0;
-            if (x > x0 && x < x1) {
+            if (Math.abs(x - x0) < 1e-10) return y0;
+            if (Math.abs(x - x1) < 1e-10) return y1;
+            if (x > x0 - 1e-10 && x < x1 + 1e-10) {
                 return y0 + (y1 - y0) * (x - x0) / (x1 - x0);
             }
         }
