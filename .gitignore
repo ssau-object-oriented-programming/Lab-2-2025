@@ -1,0 +1,20 @@
+# Java compiled files
+*.class
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.save
+*.bak
+*.tmp
+
+# Log files
+*.log
