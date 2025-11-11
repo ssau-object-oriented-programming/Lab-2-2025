@@ -51,9 +51,23 @@ public class TabulatedFunction {
         for (int i = 0; i < pointsCount - 1; i++) {
             double x1 = points[i].getX();
             double x2 = points[i + 1].getX();
+
+            if (Math.abs(x - x1)<1e-10) {
+                return points[i].getY();
+	        }
+
+	        if (Math.abs(x - x2) < 1e-10){
+		        return points[i + 1].getY();
+	        }
+            
             if (x >= x1 && x <= x2) {
                 double y1 = points[i].getY();
                 double y2 = points[i + 1].getY();
+
+                if (Math.abs(x1 - x2) < 1e-10){
+		            return (y1 + y2)/2;
+		        }
+                
                 return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
             }
         }
