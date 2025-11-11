@@ -48,26 +48,37 @@ public class TabulatedFunction {
         return points[pointsCount - 1].getX();
     }
     
-    public double getFunctionValue(double x) {
-        if (x < getLeftDomainBorder() || x > getRightDomainBorder()) {
-            return Double.NaN; // Не в области определения
-        }
-        
-        // Поиск интервала для линейной интерполяции
-        for (int i = 0; i < pointsCount - 1; i++) {
-            double x1 = points[i].getX();
-            double x2 = points[i + 1].getX();
-            
-            if (x >= x1 && x <= x2) {
-                double y1 = points[i].getY();
-                double y2 = points[i + 1].getY();
-                // Линейная интерполяция: y = y1 + (y2 - y1) * (x - x1) / (x2 - x1)
-                return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
-            }
-        }
-        
+ public double getFunctionValue(double x) {
+    final double EPSILON = 1e-10; // Машинный эпсилон для сравнения double
+    
+    if (x < getLeftDomainBorder() || x > getRightDomainBorder()) {
         return Double.NaN;
     }
+    
+    for (int i = 0; i < pointsCount - 1; i++) {
+        double x1 = points[i].getX();
+        double x2 = points[i + 1].getX();
+        
+        // Проверяем точное совпадение с x1
+        if (Math.abs(x - x1) < EPSILON) {
+            return points[i].getY();
+        }
+        
+        // Проверяем точное совпадение с x2
+        if (Math.abs(x - x2) < EPSILON) {
+            return points[i + 1].getY();
+        }
+        
+        // Проверяем попадание в интервал (x1, x2)
+        if (x > x1 && x < x2) {
+            double y1 = points[i].getY();
+            double y2 = points[i + 1].getY();
+            return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
+        }
+    }
+    
+    return Double.NaN;
+}
 
     // Методы для работы с точками
     public int getPointsCount() {
