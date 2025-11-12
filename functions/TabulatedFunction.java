@@ -49,7 +49,7 @@ public class TabulatedFunction {
     }
     
  public double getFunctionValue(double x) {
-    final double EPSILON = 1e-10; // Машинный эпсилон для сравнения double
+    final double EPSILON = 1e-10; 
     
     if (x < getLeftDomainBorder() || x > getRightDomainBorder()) {
         return Double.NaN;

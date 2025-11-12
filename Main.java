@@ -36,6 +36,56 @@ public class Main {
                 System.out.printf("%6.3f\n", y);
             }
         }
+        
+        // ТЕСТ 4: Проверка операций с точками
+        System.out.println("\n4. Тестирование операций с точками:");
+        
+        // Исходное состояние
+        System.out.println("\nИсходные точки:");
+        printAllPoints(func1);
+        
+        // Добавление точки
+        System.out.println("\n4.1. Добавление точки (2.5, 6.25):");
+        func1.addPoint(new FunctionPoint(2.5, 6.25));
+        printAllPoints(func1);
+        
+        // Добавление еще одной точки
+        System.out.println("\n4.2. Добавление точки (1.5, 2.25):");
+        func1.addPoint(new FunctionPoint(1.5, 2.25));
+        printAllPoints(func1);
+        
+        // Замена точки
+        System.out.println("\n4.3. Замена точки с индексом 3 на (2.8, 7.84):");
+        func1.setPoint(3, new FunctionPoint(2.8, 7.84));
+        printAllPoints(func1);
+        
+        // Замена координат
+        System.out.println("\n4.4. Замена x координаты точки с индексом 2 на 1.8:");
+        func1.setPointX(2, 1.8);
+        printAllPoints(func1);
+        
+        System.out.println("\n4.5. Замена y координаты точки с индексом 4 на 20.0:");
+        func1.setPointY(4, 20.0);
+        printAllPoints(func1);
+        
+        // Удаление точки
+        System.out.println("\n4.6. Удаление точки с индексом 1:");
+        func1.deletePoint(1);
+        printAllPoints(func1);
+        
+        // Проверка некорректных операций
+        System.out.println("\n4.7. Проверка некорректных операций:");
+        System.out.println("Попытка удалить точку с неверным индексом (-1):");
+        int pointsBefore = func1.getPointsCount();
+        func1.deletePoint(-1);
+        int pointsAfter = func1.getPointsCount();
+        System.out.println("Количество точек до: " + pointsBefore + ", после: " + pointsAfter + " (не изменилось)");
+        
+        System.out.println("Попытка заменить точку с нарушением порядка x:");
+        double originalX = func1.getPointX(2);
+        func1.setPoint(2, new FunctionPoint(0.5, 1.0)); // Должно отказать
+        double newX = func1.getPointX(2);
+        System.out.println("x точки с индексом 2 до: " + originalX + ", после: " + newX + " (не изменился)");
     }
     
     public static void printFunctionInfo(TabulatedFunction func, String name) {
@@ -45,6 +95,15 @@ public class Main {
         System.out.println("  Точки функции:");
         for (int i = 0; i < func.getPointsCount(); i++) {
             System.out.printf("    [%d] (%4.1f; %4.1f)\n", i, func.getPointX(i), func.getPointY(i));
+        }
+    }
+    
+    public static void printAllPoints(TabulatedFunction func) {
+        System.out.println("Количество точек: " + func.getPointsCount());
+        System.out.println("Точки функции:");
+        for (int i = 0; i < func.getPointsCount(); i++) {
+            System.out.printf("    [%d] (%.1f; %.2f)\n", 
+                i, func.getPointX(i), func.getPointY(i));
         }
     }
 }
