@@ -41,26 +41,28 @@ public class TabulatedFunction {
             return Double.NaN;
         }
 
-        for (int i = 0; i < pointsCount; i++) {
-            if (x == points[i].getX()) {
-                return points[i].getY();
-            }
-        }
-
         for (int i = 0; i < pointsCount - 1; i++) {
             double x1 = points[i].getX();
             double x2 = points[i + 1].getX();
 
-            if (x1 == x2) {
-                continue; // Пропускаем одинаковые точки
+            // пропускаем одинаковые точки
+            if (Math.abs(x1 - x2) < 1e-10) {
+                continue;
             }
 
             if (x >= x1 && x <= x2) {
-            // Линейная интерполяция по уравнению прямой
+                // проверяем точное совпадение с x1
+                if (Math.abs(x - x1) < 1e-10) {
+                    return points[i].getY();
+                }
+                // проверяем точное совпадение с x2
+                if (Math.abs(x - x2) < 1e-10) {
+                    return points[i + 1].getY();
+                }
+
+                // линейная интерполяция
                 double y1 = points[i].getY();
                 double y2 = points[i + 1].getY();
-
-                // Уравнение прямой через две точки: y = y1 + (y2 - y1) * (x - x1) / (x2 - x1)
                 return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
             }
         }
@@ -165,5 +167,13 @@ public class TabulatedFunction {
 
         points[insertIndex] = newPoint;
         pointsCount++;
+    }
+
+    public void printPoints() {
+        System.out.println("Текущие точки функции:");
+        for (int i = 0; i < pointsCount; i++) {
+            System.out.printf("[%d] (%.3f, %.3f)%n", i, getPointX(i), getPointY(i));
+        }
+        System.out.println();
     }
 }
