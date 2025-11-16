@@ -4,6 +4,7 @@ public class TabulatedFunction {
     private FunctionPoint[] points;
     private int pointsCount;
     private static final int INITIAL_CAPACITY = 10;
+    private static final double EPSILON = 1e-9; // Машинный эпсилон
 
     // ЗАДАНИЕ 3: Конструкторы
     public TabulatedFunction(double leftX, double rightX, int pointsCount) {
@@ -42,7 +43,7 @@ public class TabulatedFunction {
     }
 
     public double getFunctionValue(double x) {
-        if (x < getLeftDomainBorder() || x > getRightDomainBorder()) {
+        if (x < getLeftDomainBorder() - EPSILON || x > getRightDomainBorder() + EPSILON) {
             return Double.NaN;
         }
 
@@ -50,8 +51,8 @@ public class TabulatedFunction {
             double x1 = points[i].getX();
             double x2 = points[i + 1].getX();
 
-            if (x >= x1 && x <= x2) {
-                if (x1 == x2) {
+            if (x >= x1 - EPSILON && x <= x2 + EPSILON) {
+                if (Math.abs(x1 - x2) < EPSILON) {
                     return points[i].getY();
                 }
 
@@ -74,10 +75,10 @@ public class TabulatedFunction {
     }
 
     public void setPoint(int index, FunctionPoint point) {
-        if (index > 0 && point.getX() <= points[index - 1].getX()) {
+        if (index > 0 && point.getX() <= points[index - 1].getX() + EPSILON) {
             return;
         }
-        if (index < pointsCount - 1 && point.getX() >= points[index + 1].getX()) {
+        if (index < pointsCount - 1 && point.getX() >= points[index + 1].getX() - EPSILON) {
             return;
         }
 
@@ -89,10 +90,10 @@ public class TabulatedFunction {
     }
 
     public void setPointX(int index, double x) {
-        if (index > 0 && x <= points[index - 1].getX()) {
+        if (index > 0 && x <= points[index - 1].getX() + EPSILON) {
             return;
         }
-        if (index < pointsCount - 1 && x >= points[index + 1].getX()) {
+        if (index < pointsCount - 1 && x >= points[index + 1].getX() - EPSILON) {
             return;
         }
 
@@ -120,11 +121,11 @@ public class TabulatedFunction {
 
     public void addPoint(FunctionPoint point) {
         int insertIndex = 0;
-        while (insertIndex < pointsCount && points[insertIndex].getX() < point.getX()) {
+        while (insertIndex < pointsCount && points[insertIndex].getX() < point.getX() - EPSILON) {
             insertIndex++;
         }
 
-        if (insertIndex < pointsCount && points[insertIndex].getX() == point.getX()) {
+        if (insertIndex < pointsCount && Math.abs(points[insertIndex].getX() - point.getX()) < EPSILON) {
             return;
         }
 
