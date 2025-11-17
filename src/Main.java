@@ -8,8 +8,7 @@ public class Main {
         TabulatedFunction sinFunction = new TabulatedFunction(0.0, Math.PI, 6);
         fillWithSineValues(sinFunction);
 
-        double[] firstProbePoints = {-0.5, 0.0, Math.PI / 6, Math.PI / 3, Math.PI / 2, Math.PI, Math.PI + 0.5};
-        printValues("Initial sine approximation", sinFunction, firstProbePoints);
+        printTabulatedPoints("Initial sine approximation", sinFunction);
 
         // Modify one of the base points.
         double newY = sinFunction.getPointY(2) + 0.3;
@@ -21,8 +20,7 @@ public class Main {
         // Remove the first tabulated point to show how deletion works.
         sinFunction.deletePoint(0);
 
-        double[] secondProbePoints = {0.2, Math.PI / 3, Math.PI / 2, Math.PI * 0.75, Math.PI + 0.25};
-        printValues("After editing points", sinFunction, secondProbePoints);
+        printTabulatedPoints("After editing points", sinFunction);
     }
 
     private static void fillWithSineValues(TabulatedFunction function) {
@@ -32,12 +30,12 @@ public class Main {
         }
     }
 
-    private static void printValues(String title, TabulatedFunction function, double[] arguments) {
+    private static void printTabulatedPoints(String title, TabulatedFunction function) {
         System.out.println(title);
-        for (int i = 0; i < arguments.length; i++) {
-            double x = arguments[i];
-            double value = function.getFunctionValue(x);
-            System.out.printf("f(%.4f) = %.6f%n", x, value);
+        for (int i = 0; i < function.getPointsCount(); i++) {
+            double x = function.getPointX(i);
+            double y = function.getPointY(i);
+            System.out.printf("Point %d: x=%.4f, y=%.6f%n", i, x, y);
         }
         System.out.println();
     }
