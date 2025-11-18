@@ -21,7 +21,7 @@ public class TabulatedFunction{
 
         for (int i = 0; i < values.length; i++) {
             double x = leftX + step * i;
-            array[i] = new FunctionPoint(x, 0.0); // ← y всегда 0.0!
+            array[i] = new FunctionPoint(x,values[i]); // у больне не 0.0 а валуес
         }
     }
 
@@ -101,7 +101,7 @@ public class TabulatedFunction{
         while (newIndex<pointsCount && array[newIndex].getX()< newPoint.getX()){
             newIndex++;
         }
-        if (newIndex< pointsCount && array[newIndex].getX() == newPoint.getX()){
+        if (newIndex< pointsCount && Math.abs(array[newIndex].getX()-newPoint.getX())< Math.ulp(newPoint.getX()){
             array[newIndex] = newPoint;
             return;
         }
