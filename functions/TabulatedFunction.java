@@ -49,8 +49,6 @@ public class TabulatedFunction {
 
     public int getPointsCount() {return size;}
 
-    public int getRealLength() {return points.length;}
-
     public FunctionPoint getPoint(int index) {
         if (index >= 0 && index < size) return new FunctionPoint(points[index]);
         else return null;
