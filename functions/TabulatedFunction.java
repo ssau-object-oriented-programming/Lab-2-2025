@@ -50,6 +50,14 @@ public class TabulatedFunction {
             return Double.NaN;
         }
 
+         // Сначала проверяем, не совпадает ли x с одной из существующих точек
+        for (int i = 0; i < pointsCount; i++) {
+            if (Math.abs(points[i].getX() - x) < 1e-9) { // Используем машинный эпсилон для сравнения double
+                return points[i].getY(); // Возвращаем соответствующий y
+            }
+        }
+
+        // Если не совпадает ни с одной точкой, ищем интервал для интерполяции
         for (int i = 0; i < pointsCount - 1; i++) { // поиск промежутка в котором лежит x
             if (x >= points[i].getX() && x <= points[i + 1].getX()) { 
                 double x1 = points[i].getX();
